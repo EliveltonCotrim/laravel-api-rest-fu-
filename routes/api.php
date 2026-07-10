@@ -22,11 +22,31 @@ Route::prefix('/sanctum')->group(function () {
 
     Route::post('login', [LoginController::class, 'login']);
 
+    // Reset password
     Route::post('forgot-password', ForgotPasswordController::class);
-
     Route::post('reset-password', ResetPasswordController::class);
 
+    // Protected routes auth:sanctum
     Route::middleware('auth:sanctum')->group(function () {
+        Route::get('users', function () {
+            return User::all();
+        })->middleware(['permission:users.list']);
+
+        Route::post('logout', [LoginController::class, 'logout']);
+
+    });
+});
+
+Route::prefix('/passport')->group(function () {
+
+    Route::post('login', [LoginController::class, 'login']);
+
+    // Reset password
+    Route::post('forgot-password', ForgotPasswordController::class);
+    Route::post('reset-password', ResetPasswordController::class);
+
+    // Protected routes auth:passport
+    Route::middleware('auth:passport')->group(function () {
         Route::get('users', function () {
             return User::all();
         })->middleware(['permission:users.list']);
