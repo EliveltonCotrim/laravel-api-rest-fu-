@@ -54,7 +54,7 @@ Route::prefix('/passport')->group(function () {
         })->middleware(['permission:users.list']);
 
         Route::post('logout', [LoginController::class, 'logout']);
-        Route::apiResource('books', BookController::class);
+        // Route::apiResource('books', BookController::class);
 
     });
 });
