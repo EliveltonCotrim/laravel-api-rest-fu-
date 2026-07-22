@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\Sanctum\ForgotPasswordController;
 use App\Http\Controllers\Api\Auth\Sanctum\LoginController;
 use App\Http\Controllers\Api\Auth\Sanctum\ResetPasswordController;
+use App\Http\Controllers\BookController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::prefix('/sanctum')->group(function () {
         })->middleware(['permission:users.list']);
 
         Route::post('logout', [LoginController::class, 'logout']);
+        Route::apiResource('books', BookController::class);
 
     });
 });
@@ -52,6 +54,7 @@ Route::prefix('/passport')->group(function () {
         })->middleware(['permission:users.list']);
 
         Route::post('logout', [LoginController::class, 'logout']);
+        Route::apiResource('books', BookController::class);
 
     });
 });

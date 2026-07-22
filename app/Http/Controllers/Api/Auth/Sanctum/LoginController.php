@@ -23,8 +23,8 @@ class LoginController extends Controller
             $permissions = $user->getAllPermissions()->pluck('name')->toArray();
 
             // Gerar o token
-            $token = $user->createToken('api-token', $permissions, now()->addMinutes(3))->plainTextToken;
-            
+            $token = $user->createToken('api-token', $permissions, now()->addHour())->plainTextToken;
+
             return response()->json([
                 'token' => $token,
                 'token_type' => 'Bearer',

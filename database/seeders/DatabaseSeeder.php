@@ -18,29 +18,31 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        $this->call(PermissionSeeder::class);
+        $this->call([
+            PermissionSeeder::class,
+            BookSeeder::class
+        ]);
 
         $users = collect([
             [
                 'name' => 'Admin User',
                 'email' => 'admin@example.com',
                 'password' => Hash::make('password'),
-                'role' => 'admin'
+                'role' => 'admin',
             ],
             [
                 'name' => 'Editor User',
                 'email' => 'editor@example.com',
                 'password' => Hash::make('password'),
-                'role' => 'editor'
+                'role' => 'editor',
             ],
             [
                 'name' => 'User',
                 'email' => 'user@example.com',
                 'password' => Hash::make('password'),
-                'role' => 'user'
-            ]
+                'role' => 'user',
+            ],
         ]);
-
 
         $users->each(function ($user) {
             $values = collect($user)->only('name', 'email', 'password')->toArray();
