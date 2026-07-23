@@ -12,20 +12,34 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Sincronizar arquivos para produção
+        run: |
+          rsync -av --delete \
+            --exclude='.env' \
+            --exclude='storage/' \
+            --exclude='vendor/' \
+            --exclude='node_modules/' \
+            --exclude='.git/' \
+            ./ /var/www/my-app/laravel-api-rest-fu-
+
       - name: Install dependências
+        working-directory: /var/www/my-app/laravel-api-rest-fu-
         run: composer install --optimize-autoloader
 
       - name: Executar migrations
+        working-directory: /var/www/my-app/laravel-api-rest-fu-
         run: php artisan migrate --force
 
       - name: Executar seeders
+        working-directory: /var/www/my-app/laravel-api-rest-fu-
         run: php artisan db:seed
 
       - name: Cache de config e rotas
+        working-directory: /var/www/my-app/laravel-api-rest-fu-
         run: php artisan config:cache && php artisan route:cache && php artisan view:cache
 
       - name: Reiniciar PHP-FPM
-        run: sudo systemctl restart php-fpm
+        run: sudo systemctl restart php8.3-fpm.service
 
       - name: Reiniciar Nginx
         run: |
