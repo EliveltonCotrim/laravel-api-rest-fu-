@@ -16,7 +16,7 @@ class BookController extends Controller
     public function index()
     {
         try {
-            return Book::orderByDesc('created_at')->paginate(8)->toResourceCollection(BookResource::class);
+            return Book::orderByDesc('created_at')->paginate(10)->toResourceCollection(BookResource::class);
         } catch (\Throwable $th) {
             Log::error('BookController', [
                 'message' => 'Erro ao buscar livros',
